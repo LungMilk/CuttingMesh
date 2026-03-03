@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEditor.PackageManager.UI;
+using UnityEditor;
 public enum Direction
 {
     Up,Down
@@ -11,6 +14,9 @@ public class SawingMouseMovement : MonoBehaviour
     public float cutStrength;
     public float validDistance;
     private Vector2 previousMousePos;
+
+    public Slider slider;
+    public Slider sawPositionSlider;
     //public float distanceStartThreshold = 10;
 
     [SerializeField] private float targetTime = 60f;
@@ -26,31 +32,38 @@ public class SawingMouseMovement : MonoBehaviour
     {
         validDistance = validDistance * 60f;
         targetTime = validDistance;
+
+        lockValue = lockMax;
+        slider.maxValue = lockMax;
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             lockValue = lockMax;
+            slider.maxValue = lockMax;
         }
-        if (!Input.GetMouseButton(0))
-        {
-            return;
-        }
+        slider.value = lockValue;
+        sawPositionSlider.value = NormalizeMousePos().y;
+        print(NormalizeMousePos().y);
+        //if (!Input.GetMouseButton(0))
+        //{
+        //    return;
+        //}
 
         if (lockValue < 0)
         {
             print("passed lock");
         }
-        //scroll wheel
-        if (Input.mouseScrollDelta.y >0)
-        {
-            print("moving up");
-        }
-        if (Input.mouseScrollDelta.y < 0)
-        {
-            print("movingDown");
-        }
+        ////scroll wheel
+        //if (Input.mouseScrollDelta.y >0)
+        //{
+        //    print("moving up");
+        //}
+        //if (Input.mouseScrollDelta.y < 0)
+        //{
+        //    print("movingDown");
+        //}
         //but in pixel coords
         //Mouse Position
 
@@ -85,5 +98,14 @@ public class SawingMouseMovement : MonoBehaviour
 
         previousMousePos = Input.mousePosition;
         previousDirection = movingDirection;
+    }
+
+    Vector2 NormalizeMousePos()
+    {
+        Vector3 mousePos = Input.mousePosition;
+
+        float normalizedX = mousePos.x / Screen.width;
+        float normalizedY = mousePos.y/Screen.height;
+        return new Vector2(normalizedX, normalizedY);
     }
 }
