@@ -800,7 +800,7 @@ MonoBehaviour:
   cutStrength: 10
   validDistance: 2
   slider: {fileID: 1663646323}
-  sawPositionSlider: {fileID: 0}
+  sawPositionSlider: {fileID: 1310500626}
   targetTime: 60
   lockDirection: 0
   movingDirection: 0

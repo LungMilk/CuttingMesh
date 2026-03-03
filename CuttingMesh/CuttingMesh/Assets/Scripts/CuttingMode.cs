@@ -48,10 +48,11 @@ public class CuttingMode : MonoBehaviour
             SlicedHull hull = SliceObject(hits[i].gameObject,cutMaterial);
             if (hull != null)
             {
+                float mass = hits[i].attachedRigidbody.mass;
                 GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, null);
                 GameObject top = hull.CreateUpperHull(hits[i].gameObject, null);
-                AddHullComponents(bottom);
-                AddHullComponents(top);
+                AddHullComponents(bottom,mass);
+                AddHullComponents(top,mass);
                 Destroy(hits[i].gameObject);
             }
         }
@@ -62,11 +63,12 @@ public class CuttingMode : MonoBehaviour
         return obj.Slice(cuttingPlane.position,cuttingPlane.up,crossSectionMaterial);
     }
 
-    public void AddHullComponents(GameObject go)
+    public void AddHullComponents(GameObject go,float mass)
     {
         go.layer = 9; //figure that out later
         Rigidbody rb = go.AddComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.mass = mass;
         MeshCollider collider = go.AddComponent<MeshCollider>();
         collider.convex = true;
 
