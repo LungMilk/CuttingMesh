@@ -24,7 +24,7 @@ public class CuttingMode : MonoBehaviour
             RotatePlane();
             if (Input.GetMouseButtonDown(0))
             {
-                Slice();
+                //Slice();
             }
         }
     }
@@ -35,7 +35,12 @@ public class CuttingMode : MonoBehaviour
 
     public void Slice()
     {
-        AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+
+        if (cuttingSoundEffect != null)
+        {
+            Debug.Log("Playing cutting sound effect");
+            AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+        }
 
         Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(10, 0.1f, 10), cuttingPlane.rotation, layerMask);
 
