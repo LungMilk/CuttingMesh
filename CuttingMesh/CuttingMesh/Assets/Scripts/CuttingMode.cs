@@ -9,25 +9,24 @@ public class CuttingMode : MonoBehaviour
     public Transform cuttingPlane;
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
-
+    public float rotationAngle = 25;
     public Material cutMaterial;
 
     public SoundEffectSO cuttingSoundEffect;
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKey(KeyCode.E))
         {
-            isCutting = firstPersonController.moveCamera;
-            firstPersonController.moveCamera = !firstPersonController.moveCamera;
+            RotatePlane(+rotationAngle * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            RotatePlane(-rotationAngle * Time.deltaTime);
         }
 
-        if (isCutting)
+        if (Input.GetMouseButtonDown(0))
         {
-            RotatePlane();
-            if (Input.GetMouseButtonDown(0))
-            {
                 Slice();
-            }
         }
     }
     public void RotatePlane()
@@ -35,6 +34,10 @@ public class CuttingMode : MonoBehaviour
         cuttingPlane.eulerAngles += new Vector3(0, 0, -Input.GetAxis("Mouse X") * 5);
     }
 
+    public void RotatePlane(float angle)
+    {
+        cuttingPlane.eulerAngles += new Vector3(0, 0, -angle * 5);
+    }
     public void Slice()
     {
         AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
