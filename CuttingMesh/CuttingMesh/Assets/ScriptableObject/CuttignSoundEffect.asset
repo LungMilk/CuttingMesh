@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656774209efee6f41bc1a4227e967df8, type: 3}
   m_Name: CuttignSoundEffect
   m_EditorClassIdentifier: Assembly-CSharp::SoundEffectSO
-  clips: []
+  clips:
+  - {fileID: 0}
   volume: 1
   pitch: 1
   randomizePitch: 0

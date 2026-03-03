@@ -10,6 +10,8 @@ public class CuttingMode : MonoBehaviour
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
 
+    public Material cutMaterial;
+
     public SoundEffectSO cuttingSoundEffect;
     private void Update()
     {
@@ -43,7 +45,7 @@ public class CuttingMode : MonoBehaviour
 
         for (int i = 0; i< hits.Length; i++)
         {
-            SlicedHull hull = SliceObject(hits[i].gameObject,null);
+            SlicedHull hull = SliceObject(hits[i].gameObject,cutMaterial);
             if (hull != null)
             {
                 GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, null);
