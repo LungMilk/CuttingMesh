@@ -9,6 +9,8 @@ public class CuttingMode : MonoBehaviour
     public Transform cuttingPlane;
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
+
+    public SoundEffectSO cuttingSoundEffect;
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))
@@ -33,6 +35,8 @@ public class CuttingMode : MonoBehaviour
 
     public void Slice()
     {
+        AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+
         Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(10, 0.1f, 10), cuttingPlane.rotation, layerMask);
 
         if (hits.Length <= 0) { return; }
