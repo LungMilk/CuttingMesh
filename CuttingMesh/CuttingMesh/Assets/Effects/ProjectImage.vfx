@@ -586,7 +586,7 @@ MonoBehaviour:
   angleFade: 1
   affectBaseColor: 1
   affectMAOS: 1
-  decalLayer: 4294967295
+  decalLayer: 512
 --- !u!114 &8926484042661614866
 MonoBehaviour:
   m_ObjectHideFlags: 0
