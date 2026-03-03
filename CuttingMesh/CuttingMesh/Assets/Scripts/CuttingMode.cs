@@ -2,31 +2,42 @@ using EzySlice;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.Rendering;
-
+using System.Collections.Generic;
+using UnityEngine.Events;
 public class CuttingMode : MonoBehaviour
 {
     bool isCutting = false;
     public Transform cuttingPlane;
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
+    public RenderingLayerMask renderingLayer;
+
     public float rotationAngle = 25;
+    private float currentRotation;
     public Material cutMaterial;
 
     public SoundEffectSO cuttingSoundEffect;
+    bool cut;
     private void Update()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetMouseButtonDown(0) && !cut)
+        {
+            Slice();
+            cut = true;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            cut = false;
+        }
+        //rotation locks do not work yet
+        currentRotation = cuttingPlane.rotation.z;
+        if (Input.GetKey(KeyCode.E) && !(currentRotation >= 160))
         {
             RotatePlane(+rotationAngle * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) && !(currentRotation <= -160))
         {
             RotatePlane(-rotationAngle * Time.deltaTime);
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-                Slice();
         }
     }
     public void RotatePlane()
@@ -40,7 +51,10 @@ public class CuttingMode : MonoBehaviour
     }
     public void Slice()
     {
-        AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+        if (cuttingSoundEffect != null)
+        {
+            AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+        }
 
         Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(10, 0.1f, 10), cuttingPlane.rotation, layerMask);
 
@@ -61,7 +75,7 @@ public class CuttingMode : MonoBehaviour
         }
     }
 
-    public SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial = null)
+    public SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial)
     {
         return obj.Slice(cuttingPlane.position,cuttingPlane.up,crossSectionMaterial);
     }
@@ -74,7 +88,18 @@ public class CuttingMode : MonoBehaviour
         rb.mass = mass;
         MeshCollider collider = go.AddComponent<MeshCollider>();
         collider.convex = true;
+        var mr = go.GetComponent<MeshRenderer>();
+        mr.renderingLayerMask = renderingLayer;
+        List<Material> materials = new List<Material>();
+        mr.GetMaterials(materials);
 
+        for (int i = 0; i < materials.Count; i++)
+        {
+            if (materials[i] == null)
+            {
+                materials[i] = cutMaterial;
+            }
+        }
         rb.AddExplosionForce(100, go.transform.position,10);
     }
 }
