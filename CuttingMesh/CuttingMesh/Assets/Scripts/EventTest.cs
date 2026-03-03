@@ -8,7 +8,7 @@ public class EventTest : MonoBehaviour
     public void called()
     {
         //Debug.Log("Cutting finished");
-        cutfinished.Invoke();
+        cutfinished?.Invoke();
     }
 
 }
