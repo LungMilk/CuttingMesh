@@ -64,14 +64,19 @@ public class CuttingMode : MonoBehaviour
 
         for (int i = 0; i< hits.Length; i++)
         {
+            if (hits[i].tag == "Bomb")
+            {
+                Debug.Log("Hit Bomb");
+            }
             SlicedHull hull = SliceObject(hits[i].gameObject,cutMaterial);
             if (hull != null)
             {
                 float mass = hits[i].attachedRigidbody.mass;
+                Material mat = hits[i].GetComponent<MeshRenderer>().sharedMaterial;
                 GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, null);
                 GameObject top = hull.CreateUpperHull(hits[i].gameObject, null);
-                AddHullComponents(bottom,mass);
-                AddHullComponents(top,mass);
+                AddHullComponents(bottom,mass, mat);
+                AddHullComponents(top,mass, mat);
                 Destroy(hits[i].gameObject);
             }
         }
@@ -82,26 +87,26 @@ public class CuttingMode : MonoBehaviour
         return obj.Slice(cuttingPlane.position,cuttingPlane.up,crossSectionMaterial);
     }
 
-    public void AddHullComponents(GameObject go,float mass)
+    public void AddHullComponents(GameObject go,float mass, Material mat)
     {
         go.layer = 9; //figure that out later
         Rigidbody rb = go.AddComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.mass = mass;
+        rb.mass = mass/2;
         MeshCollider collider = go.AddComponent<MeshCollider>();
-        collider.convex = false ;
+        collider.convex = true;
         var mr = go.GetComponent<MeshRenderer>();
+        mr.sharedMaterial = mat;
         mr.renderingLayerMask = renderingLayer;
         List<Material> materials = new List<Material>();
         mr.GetMaterials(materials);
 
         for (int i = 0; i < materials.Count; i++)
         {
-            if (materials[i] == null)
-            {
-                materials[i] = cutMaterial;
-            }
+                materials[i] = mat;
+    
         }
+        mr.SetMaterials(materials);
         rb.AddExplosionForce(explosiveCuttingForce, go.transform.position,10);
     }
 }
