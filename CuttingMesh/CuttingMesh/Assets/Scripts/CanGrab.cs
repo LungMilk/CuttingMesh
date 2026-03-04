@@ -29,12 +29,27 @@ public class CanGrab : MonoBehaviour
         }*/
     }
 
+    public void RemoveFuel(float amount)
+    {
+        fuel -= amount;
+        ChangeText();
+    }
+    public void AddFuel(float amount)
+    {
+        fuel += amount;
+        ChangeText();
+    }
+
+    public void ChangeText()
+    {
+        fuelText.text = "Fuel: " + fuel;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 8)
         {
-            fuel += 10f;
-            fuelText.text = "Fuel: " + fuel;
+            AddFuel(10f);
             Destroy(other.gameObject);
         }
     }

@@ -10,6 +10,7 @@ public class CuttingMode : MonoBehaviour
     public Transform cuttingPlane;
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
+    public CanGrab canGrab;
     public RenderingLayerMask renderingLayer;
 
     public float rotationAngle = 25;
@@ -52,6 +53,7 @@ public class CuttingMode : MonoBehaviour
     }
     public void Slice()
     {
+        canGrab.RemoveFuel(5f);
         print("cutting");
         if (cuttingSoundEffect != null)
         {
