@@ -17,7 +17,7 @@ public class AnimTranistions : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.Space) && (stuck == false))
+        /*if(Input.GetKeyDown(KeyCode.Space) && (stuck == false))
         {
            stuck = true;
         }
@@ -25,7 +25,7 @@ public class AnimTranistions : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && (stuck == true))
         {
             stuck = false;
-        }
+        }*/
 
 
 
