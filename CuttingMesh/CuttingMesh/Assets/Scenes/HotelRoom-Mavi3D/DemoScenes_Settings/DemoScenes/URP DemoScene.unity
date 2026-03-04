@@ -2445,6 +2445,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5849378433933823860, guid: 963942c8499c38b419118242f8b77aa1, type: 3}
   m_PrefabInstance: {fileID: 1392383726}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1503066704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7553802593961414735, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
+  m_PrefabInstance: {fileID: 1966009410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1503066708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503066704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82b98b3cf9daddc43a22fbdb458a7d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FrictionGrabber
+  meshCollider: {fileID: 0}
+  frictionValue: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  type: 0
+  frictValue: 0
 --- !u!1001 &1596799552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2577,6 +2601,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3836701717764789823, guid: 18ded3322d26c39489a8e0fdd14cd24f, type: 3}
   m_PrefabInstance: {fileID: 1639069495}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1642335543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1642335545}
+  - component: {fileID: 1642335544}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1642335544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642335543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2482f8650d0322a449630e9151051f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  initialPoolSize: 10
+--- !u!4 &1642335545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642335543}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.34876, y: 0.76321, z: 22.32618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1681005660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2843,17 +2912,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!114 &1743481318 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
+--- !u!95 &1743481320 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8215823583521151192, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
   m_PrefabInstance: {fileID: 1966009410}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313255764316be24fba72d8676189460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EventTest
 --- !u!1001 &1748366991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3586,32 +3649,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1743481318}
+      objectReference: {fileID: 1503066708}
     - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Frictionator
+      value: FrictionTest
       objectReference: {fileID: 0}
     - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EventTest, Assembly-CSharp
+      value: FrictionGrabber, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
+      propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1743481320}
+    - target: {fileID: 6519951634713972280, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       propertyPath: CutFriction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UnityEngine.Animator, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7553802593961414735, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1503066708}
   m_SourcePrefab: {fileID: 100100000, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
 --- !u!1001 &1971608079
 PrefabInstance:
@@ -4122,3 +4192,4 @@ SceneRoots:
   - {fileID: 1122451605}
   - {fileID: 2120788294}
   - {fileID: 2082944717}
+  - {fileID: 1642335545}
