@@ -87,7 +87,7 @@ public class CuttingMode : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.mass = mass;
         MeshCollider collider = go.AddComponent<MeshCollider>();
-        collider.convex = true;
+        collider.convex = false ;
         var mr = go.GetComponent<MeshRenderer>();
         mr.renderingLayerMask = renderingLayer;
         List<Material> materials = new List<Material>();
