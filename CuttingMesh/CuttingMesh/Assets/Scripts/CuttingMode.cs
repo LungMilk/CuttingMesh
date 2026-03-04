@@ -92,7 +92,7 @@ public class CuttingMode : MonoBehaviour
         go.layer = 9; //figure that out later
         Rigidbody rb = go.AddComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.mass = mass/2;
+        rb.mass = mass;
         MeshCollider collider = go.AddComponent<MeshCollider>();
         collider.convex = true;
         var mr = go.GetComponent<MeshRenderer>();
