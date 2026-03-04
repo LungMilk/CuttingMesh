@@ -18,11 +18,12 @@ public class CuttingMode : MonoBehaviour
 
     public SoundEffectSO cuttingSoundEffect;
     bool cut;
+    public float explosiveCuttingForce = 50f;
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && !cut)
         {
-            Slice();
+            //Slice();
             cut = true;
         }
         if (Input.GetMouseButtonUp(0))
@@ -51,6 +52,7 @@ public class CuttingMode : MonoBehaviour
     }
     public void Slice()
     {
+        print("cutting");
         if (cuttingSoundEffect != null)
         {
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
@@ -100,6 +102,6 @@ public class CuttingMode : MonoBehaviour
                 materials[i] = cutMaterial;
             }
         }
-        rb.AddExplosionForce(100, go.transform.position,10);
+        rb.AddExplosionForce(explosiveCuttingForce, go.transform.position,10);
     }
 }
