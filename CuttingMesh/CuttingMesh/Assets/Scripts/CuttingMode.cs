@@ -52,7 +52,7 @@ public class CuttingMode : MonoBehaviour
     }
     public void Slice()
     {
-        print("cutting");
+        //print("cutting");
         if (cuttingSoundEffect != null)
         {
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);

@@ -31,12 +31,13 @@ public class AnimTranistions : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && (stuck == false))
         {
+            Debug.Log("Clicking");
             anim.SetTrigger("Clicked");
         }
         
         else
         {
-
+            
             anim.ResetTrigger("Clicked");
         }
 
@@ -47,7 +48,7 @@ public class AnimTranistions : MonoBehaviour
 
         else if (stuck == false)
         {
-            anim.speed = 1;
+            //anim.speed = 1;
         }
     }
 }

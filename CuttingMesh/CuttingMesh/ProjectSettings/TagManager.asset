@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
+  - LowFriction
+  - Medium Friction
+  - HighFriction
   layers:
   - Default
   - TransparentFX
