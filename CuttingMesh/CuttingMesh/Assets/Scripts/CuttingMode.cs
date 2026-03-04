@@ -21,6 +21,12 @@ public class CuttingMode : MonoBehaviour
     public float explosiveCuttingForce = 50f;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            firstPersonController.moveCamera = !firstPersonController.moveCamera;
+            firstPersonController.Inputs.SetCursorState(firstPersonController.moveCamera);
+            
+        }
         if (Input.GetMouseButtonDown(0) && !cut)
         {
             //Slice();
@@ -58,7 +64,7 @@ public class CuttingMode : MonoBehaviour
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
         }
 
-        Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(10, 0.1f, 10), cuttingPlane.rotation, layerMask);
+        Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(2f, 0.1f, 2f), cuttingPlane.rotation, layerMask);
 
         if (hits.Length <= 0) { return; }
 
