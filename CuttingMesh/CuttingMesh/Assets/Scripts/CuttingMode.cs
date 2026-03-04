@@ -64,7 +64,7 @@ public class CuttingMode : MonoBehaviour
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
         }
 
-        Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(10, 0.1f, 10), cuttingPlane.rotation, layerMask);
+        Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(2f, 0.1f, 2f), cuttingPlane.rotation, layerMask);
 
         if (hits.Length <= 0) { return; }
 
