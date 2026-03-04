@@ -21,6 +21,12 @@ public class CuttingMode : MonoBehaviour
     public float explosiveCuttingForce = 50f;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            firstPersonController.moveCamera = !firstPersonController.moveCamera;
+            firstPersonController.Inputs.SetCursorState(firstPersonController.moveCamera);
+            
+        }
         if (Input.GetMouseButtonDown(0) && !cut)
         {
             //Slice();
@@ -89,7 +95,7 @@ public class CuttingMode : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.mass = mass;
         MeshCollider collider = go.AddComponent<MeshCollider>();
-        collider.convex = false ;
+        collider.convex = true;
         var mr = go.GetComponent<MeshRenderer>();
         mr.renderingLayerMask = renderingLayer;
         List<Material> materials = new List<Material>();

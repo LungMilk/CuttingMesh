@@ -70,9 +70,10 @@ namespace StarterAssets
 #endif
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
-		private GameObject _mainCamera;
 
-		private const float _threshold = 0.01f;
+		public StarterAssetsInputs Inputs { get { return _input; } }
+		private GameObject _mainCamera;
+        private const float _threshold = 0.01f;
 
 		public bool moveCamera = true;
 		private bool IsCurrentDeviceMouse
