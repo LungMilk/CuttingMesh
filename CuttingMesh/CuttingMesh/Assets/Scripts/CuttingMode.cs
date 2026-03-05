@@ -193,10 +193,11 @@ public class CuttingMode : MonoBehaviour
             if (hull != null)
             {
                 float mass = hits[i].attachedRigidbody.mass;
+                Material mat = hits[i].GetComponent<MeshRenderer>().sharedMaterial;
                 GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, null);
                 GameObject top = hull.CreateUpperHull(hits[i].gameObject, null);
-                AddHullComponents(bottom, mass, objects[i]);
-                AddHullComponents(top, mass, objects[i]);
+                AddHullComponents(bottom, mass, objects[i],mat);
+                AddHullComponents(top, mass, objects[i],mat);
                 Destroy(hits[i].gameObject);
             }
         }
@@ -211,12 +212,13 @@ public class CuttingMode : MonoBehaviour
         return obj.Slice(cuttingPlane.position,cuttingPlane.up,crossSectionMaterial);
     }
 
-    public void AddHullComponents(GameObject go,float mass, CuttableObject cuttableData)
+    public void AddHullComponents(GameObject go,float mass, CuttableObject cuttableData, Material mat)
     {
         go.layer = 9; //figure that out later
         Rigidbody rb = go.AddComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.mass = mass;
+
         MeshCollider collider = go.AddComponent<MeshCollider>();
         collider.convex = true;
 
@@ -224,17 +226,17 @@ public class CuttingMode : MonoBehaviour
         cO.SetCuttableData(cuttableData);
 
         var mr = go.GetComponent<MeshRenderer>();
+        mr.sharedMaterial = mat;
+
         mr.renderingLayerMask = renderingLayer;
         List<Material> materials = new List<Material>();
         mr.GetMaterials(materials);
 
         for (int i = 0; i < materials.Count; i++)
         {
-            if (materials[i] == null)
-            {
-                materials[i] = cutMaterial;
-            }
+            materials[i] = mat;
         }
+        mr.SetMaterials(materials);
         rb.AddExplosionForce(explosiveCuttingForce, go.transform.position,10);
     }
 }
