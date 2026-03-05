@@ -17,6 +17,7 @@ public class FrictionGrabber : MonoBehaviour
     public FrictionTypes foundType;
     public ParticleSystem foundParticle;
     public SoundEffectSO foundSound;
+    public Material foundMaterial;
 
     [Header("StartCut events being called")]
     public UnityEvent NoCuttableFound;
@@ -111,9 +112,10 @@ public class FrictionGrabber : MonoBehaviour
     {
         foundType = cuttable.type;
         frictionValue = cuttable.frictionValue;
+        
         animator.speed = frictionValue;
         print($"Friction value on {cuttable.name}:{frictionValue}");
-
+        print($"Particle type on {cuttable.name}:{foundParticle}");
 
         if (cuttable.cuttingSoundEffect != null)
         {
@@ -126,11 +128,20 @@ public class FrictionGrabber : MonoBehaviour
 
         if (cuttable.cuttingVisualEffect != null)
         {
-            cuttable.cuttingVisualEffect = null;
+            foundParticle = cuttable.cuttingVisualEffect;
+            //cuttable.cuttingVisualEffect = null;
         }
-        else
+        else if(cuttable.cuttingVisualEffect == null)
         {
-            //print($"no particle found on {cuttable.gameObject.name}");
+            foundParticle = null;
+        }
+        if (cuttable.cuttingMaterial != null)
+        {
+            foundMaterial = cuttable.cuttingMaterial;
+        }
+        else if(cuttable.cuttingMaterial == null)
+        {
+            foundMaterial = null;
         }
     }
 

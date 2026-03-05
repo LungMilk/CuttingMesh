@@ -11,6 +11,7 @@ public class CuttingMode : MonoBehaviour
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
     public RenderingLayerMask renderingLayer;
+    public GameObject SoundObject;
 
     public float rotationAngle = 25;
     private float currentRotation;
@@ -21,6 +22,7 @@ public class CuttingMode : MonoBehaviour
     public float explosiveCuttingForce = 50f;
 
     public UnityEvent cuttingEvent;
+    public UnityEvent noncuttingEvent;
     public FrictionGrabber frictionGrab;
     private void Update()
     {
@@ -63,10 +65,27 @@ public class CuttingMode : MonoBehaviour
     public void Slice()
     {
         //print("cutting");
-        if (cuttingSoundEffect != null)
+
+        //if (cuttingSoundEffect != null)
+        //{
+        //    AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+        //}
+
+
+        FrictionGrabber FG = SoundObject.GetComponent<FrictionGrabber>();
+        if (FG.foundSound == null) { return; }
+        else
         {
-            AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+            SoundEffectSO psm = FG.foundSound;
+            AudioManager.Instance.Play(psm, this.transform.position);
+
         }
+
+        if(FG.foundMaterial != null)
+        {
+            cutMaterial = FG.foundMaterial;
+        }
+
 
         if (frictionGrab.FindCuttableObjects() == null) { return; }
         var objects = frictionGrab.FindCuttableObjects();
@@ -96,7 +115,8 @@ public class CuttingMode : MonoBehaviour
     }
     public void IncorrectCuttable()
     {
-        print("BAD CUT");
+        //print("BAD CUT");
+        noncuttingEvent.Invoke();
     }
 
     public SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial)
@@ -120,6 +140,12 @@ public class CuttingMode : MonoBehaviour
         mr.renderingLayerMask = renderingLayer;
         List<Material> materials = new List<Material>();
         mr.GetMaterials(materials);
+
+        //FrictionGrabber FG = SoundObject.GetComponent<FrictionGrabber>();
+        //if (FG.foundMaterial != null)
+        //{
+        //    cutMaterial = FG.foundMaterial;
+        //}
 
         for (int i = 0; i < materials.Count; i++)
         {
