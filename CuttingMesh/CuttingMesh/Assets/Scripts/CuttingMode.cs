@@ -62,16 +62,8 @@ public class CuttingMode : MonoBehaviour
     {
         cuttingPlane.eulerAngles += new Vector3(0, 0, -angle * 5);
     }
-    public void Slice()
+    public void FoundData()
     {
-        //print("cutting");
-
-        //if (cuttingSoundEffect != null)
-        //{
-        //    AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
-        //}
-
-
         FrictionGrabber FG = SoundObject.GetComponent<FrictionGrabber>();
         if (FG.foundSound == null) { return; }
         else
@@ -81,11 +73,19 @@ public class CuttingMode : MonoBehaviour
 
         }
 
-        if(FG.foundMaterial != null)
+        if (FG.foundMaterial != null)
         {
             cutMaterial = FG.foundMaterial;
         }
+    }
+    public void Slice()
+    {
+        //print("cutting");
 
+        //if (cuttingSoundEffect != null)
+        //{
+        //    AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
+        //}
 
         if (frictionGrab.FindCuttableObjects() == null) { return; }
         var objects = frictionGrab.FindCuttableObjects();
