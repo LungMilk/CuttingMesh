@@ -6,7 +6,7 @@ public class AnimTranistions : MonoBehaviour
 
     Animator anim;
     public Boolean stuck;
-    public CanGrab canGrab;
+    //public CanGrab canGrab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,7 +30,7 @@ public class AnimTranistions : MonoBehaviour
 
 
 
-        if (Input.GetMouseButtonDown(0) && (stuck == false) && canGrab.fuel > 0f)
+        if (Input.GetMouseButtonDown(0) && (stuck == false))
         {
             Debug.Log("Clicking");
             anim.SetTrigger("Clicked");

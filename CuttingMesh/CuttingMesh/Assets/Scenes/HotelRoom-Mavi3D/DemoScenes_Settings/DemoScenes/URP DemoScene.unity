@@ -1305,6 +1305,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687299841}
   m_CullTransparentMesh: 1
+--- !u!1 &696662741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 205198120604495346, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
+  m_PrefabInstance: {fileID: 1966009410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &697119020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1970,7 +1975,6 @@ GameObject:
   - component: {fileID: 995207121}
   - component: {fileID: 995207120}
   - component: {fileID: 995207119}
-  - component: {fileID: 995207118}
   m_Layer: 9
   m_Name: Cube (4)
   m_TagString: HighFriction
@@ -1978,28 +1982,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &995207118
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995207117}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &995207119
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3669,12 +3651,25 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6005919844270343326, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
   m_PrefabInstance: {fileID: 1966009410}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 696662741}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 775e08510c4b9574a932476db69762ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CuttingMode
+--- !u!114 &1398649829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696662741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734f3731f28883b4ebf37f23054b7825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResetScript
+  fade: {fileID: 252140092}
 --- !u!1001 &1596799552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4273,7 +4268,6 @@ GameObject:
   - component: {fileID: 1744879907}
   - component: {fileID: 1744879906}
   - component: {fileID: 1744879905}
-  - component: {fileID: 1744879904}
   m_Layer: 9
   m_Name: Cube (5)
   m_TagString: Medium Friction
@@ -4281,28 +4275,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1744879904
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744879903}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &1744879905
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5217,6 +5189,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 205198120604495346, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1398649829}
     - targetCorrespondingSourceObject: {fileID: 5162075798493988688, guid: 44d7ae9357c88024f83300696efb46cd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1915767780}
@@ -5234,7 +5209,6 @@ GameObject:
   - component: {fileID: 1967896432}
   - component: {fileID: 1967896431}
   - component: {fileID: 1967896430}
-  - component: {fileID: 1967896429}
   m_Layer: 9
   m_Name: Cube (6)
   m_TagString: LowFriction
@@ -5242,28 +5216,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1967896429
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967896428}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &1967896430
 Rigidbody:
   m_ObjectHideFlags: 0

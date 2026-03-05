@@ -10,7 +10,6 @@ public class CuttingMode : MonoBehaviour
     public Transform cuttingPlane;
     public FirstPersonController firstPersonController;
     public LayerMask layerMask;
-    public CanGrab canGrab;
     public RenderingLayerMask renderingLayer;
 
     public float rotationAngle = 25;
@@ -22,6 +21,12 @@ public class CuttingMode : MonoBehaviour
     public float explosiveCuttingForce = 50f;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            firstPersonController.moveCamera = !firstPersonController.moveCamera;
+            firstPersonController.Inputs.SetCursorState(firstPersonController.moveCamera);
+
+        }
         if (Input.GetMouseButtonDown(0) && !cut)
         {
             //Slice();
@@ -53,8 +58,7 @@ public class CuttingMode : MonoBehaviour
     }
     public void Slice()
     {
-        canGrab.RemoveFuel(5f);
-        print("cutting");
+        //print("cutting");
         if (cuttingSoundEffect != null)
         {
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
