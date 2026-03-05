@@ -19,6 +19,9 @@ public class CuttingMode : MonoBehaviour
     public SoundEffectSO cuttingSoundEffect;
     bool cut;
     public float explosiveCuttingForce = 50f;
+
+    public UnityEvent cuttingEvent;
+    public FrictionGrabber frictionGrab;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
@@ -29,6 +32,7 @@ public class CuttingMode : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && !cut)
         {
+            cuttingEvent.Invoke();
             //Slice();
             cut = true;
         }
@@ -64,7 +68,15 @@ public class CuttingMode : MonoBehaviour
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
         }
 
-        Collider[] hits = Physics.OverlapBox(cuttingPlane.position, new Vector3(2f, 0.1f, 2f), cuttingPlane.rotation, layerMask);
+        if (frictionGrab.FindCuttableObjects() == null) { return; }
+        var objects = frictionGrab.FindCuttableObjects();
+
+
+        Collider[] hits = new Collider[objects.Length];
+        for (int i = 0; i < objects.Length; i++)
+        {
+            hits[i] = objects[i].GetComponent<Collider>();
+        }
 
         if (hits.Length <= 0) { return; }
 
@@ -76,11 +88,15 @@ public class CuttingMode : MonoBehaviour
                 float mass = hits[i].attachedRigidbody.mass;
                 GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, null);
                 GameObject top = hull.CreateUpperHull(hits[i].gameObject, null);
-                AddHullComponents(bottom,mass);
-                AddHullComponents(top,mass);
+                AddHullComponents(bottom, mass, objects[i]);
+                AddHullComponents(top, mass, objects[i]);
                 Destroy(hits[i].gameObject);
             }
         }
+    }
+    public void IncorrectCuttable()
+    {
+        print("BAD CUT");
     }
 
     public SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial)
@@ -88,7 +104,7 @@ public class CuttingMode : MonoBehaviour
         return obj.Slice(cuttingPlane.position,cuttingPlane.up,crossSectionMaterial);
     }
 
-    public void AddHullComponents(GameObject go,float mass)
+    public void AddHullComponents(GameObject go,float mass, CuttableObject cuttableData)
     {
         go.layer = 9; //figure that out later
         Rigidbody rb = go.AddComponent<Rigidbody>();
@@ -96,6 +112,10 @@ public class CuttingMode : MonoBehaviour
         rb.mass = mass;
         MeshCollider collider = go.AddComponent<MeshCollider>();
         collider.convex = true;
+
+        CuttableObject cO = go.AddComponent<CuttableObject>();
+        cO.SetCuttableData(cuttableData);
+
         var mr = go.GetComponent<MeshRenderer>();
         mr.renderingLayerMask = renderingLayer;
         List<Material> materials = new List<Material>();

@@ -15,7 +15,7 @@ public class AnimTranistions : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
 
         /*if(Input.GetKeyDown(KeyCode.Space) && (stuck == false))
         {
@@ -29,17 +29,17 @@ public class AnimTranistions : MonoBehaviour
 
 
 
-        if (Input.GetMouseButtonDown(0) && (stuck == false))
-        {
-            Debug.Log("Clicking");
-            anim.SetTrigger("Clicked");
-        }
+        //if (Input.GetMouseButtonDown(0) && (stuck == false))
+        //{
+        //    Debug.Log("Clicking");
+        //    anim.SetTrigger("Clicked");
+        //}
         
-        else
-        {
+        //else
+        //{
             
-            anim.ResetTrigger("Clicked");
-        }
+        //    anim.ResetTrigger("Clicked");
+        //}
 
         if (stuck == true)
         {
@@ -52,3 +52,4 @@ public class AnimTranistions : MonoBehaviour
         }
     }
 }
+
