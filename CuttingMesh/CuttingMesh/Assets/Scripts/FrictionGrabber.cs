@@ -1,24 +1,34 @@
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Events;
 
 
 public class FrictionGrabber : MonoBehaviour
 {
-    public MeshCollider meshCollider;
+    //public MeshCollider meshCollider;
+    public Animator animator;
     public float frictionValue;
     public LayerMask layerMask;
     public FrictionTypes type;
     public float frictValue;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+
+    public Transform detectionBox;
+    public float boxWidth = 2f;
+    public FrictionTypes foundType;
+    public ParticleSystem foundParticle;
+    public SoundEffectSO foundSound;
+
+    [Header("StartCut events being called")]
+    public UnityEvent NoCuttableFound;
+    public UnityEvent YesCuttableFound;
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            print(FindCuttableObjects()[0].name);
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -54,6 +64,82 @@ public class FrictionGrabber : MonoBehaviour
 
     }
 
+
+    public void StartCut()
+    {
+        var foundObjects = FindCuttableObjects();
+
+
+        if (foundObjects.Length > 0)
+        {
+            SetCuttableObjectData(foundObjects[0]);
+            YesCuttableFound.Invoke();
+        }
+
+        if (foundObjects.Length == 0)
+        {
+            NoCuttableFound.Invoke();
+        }
+    }
+    /// <summary>
+    /// Returns an array of cuttable object scripts, reference their game object or mesh by having its parent reference or something
+    /// </summary>
+    /// <returns></returns>
+    public CuttableObject[] FindCuttableObjects()
+    {
+        Collider[] hits = Physics.OverlapBox(
+            detectionBox.position, 
+            new Vector3(boxWidth, boxWidth, boxWidth),
+            transform.rotation,
+            layerMask
+            );
+
+        CuttableObject[] objects = new CuttableObject[hits.Length];
+        for (int i = 0; i < hits.Length; i++)
+        {
+            var cuttableObject = (hits[i].GetComponent<CuttableObject>());
+            if (cuttableObject != null)
+            {
+                objects[i] = cuttableObject;
+            }
+        }
+
+        return objects;
+    }
+
+    public void SetCuttableObjectData(CuttableObject cuttable)
+    {
+        foundType = cuttable.type;
+        frictionValue = cuttable.frictionValue;
+        animator.speed = frictionValue;
+        print($"Friction value on {cuttable.name}:{frictionValue}");
+
+
+        if (cuttable.cuttingSoundEffect != null)
+        {
+            foundSound = cuttable.cuttingSoundEffect;
+        }
+        else
+        {
+            //print($"No sound effect found on {cuttable.gameObject.name}");
+        }
+
+        if (cuttable.cuttingVisualEffect != null)
+        {
+            cuttable.cuttingVisualEffect = null;
+        }
+        else
+        {
+            //print($"no particle found on {cuttable.gameObject.name}");
+        }
+    }
+
+    public void SetFrictionValue(float input)
+    {
+        frictionValue = input;
+        animator.speed = frictionValue;
+
+    }
     public void GetFriction()
     {
         //return 0;
@@ -85,23 +171,23 @@ public class FrictionGrabber : MonoBehaviour
 
     }
 
-    public void FrictionController(FrictionTypes amt)
-    {
-        switch (amt)
-        {             case FrictionTypes.LowFriction:
-                frictValue = 1;
-                break;
-            case FrictionTypes.MediumFriction:
-                frictValue = .75f;
-                break;
-            case FrictionTypes.HighFriction:
-                frictValue = .05f;
-                break;
-            default:
-                frictValue = 1;
-                break;
-        }
-    }
+    //public void FrictionController(FrictionTypes amt)
+    //{
+    //    switch (amt)
+    //    {             case FrictionTypes.LowFriction:
+    //            frictValue = 1;
+    //            break;
+    //        case FrictionTypes.MediumFriction:
+    //            frictValue = .75f;
+    //            break;
+    //        case FrictionTypes.HighFriction:
+    //            frictValue = .05f;
+    //            break;
+    //        default:
+    //            frictValue = 1;
+    //            break;
+    //    }
+    //}
 
     public float EvaluateTag(string tag)
     {
