@@ -51,7 +51,7 @@ public class CuttingMode : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (!isCutting) { isCutting = true; cuttingEvent.Invoke(); }
-            print("cutting");
+            //print("cutting");
             RotateSaw(sawAngleStep);
             //if (!rotateSaw) {
             //    currentAngle = chainsawTransform.localEulerAngles.y;
