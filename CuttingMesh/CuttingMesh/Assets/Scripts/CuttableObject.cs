@@ -11,6 +11,7 @@ public class CuttableObject : MonoBehaviour
     public float frictionValue;
     public SoundEffectSO cuttingSoundEffect;
     public ParticleSystem cuttingVisualEffect;
+    public Material cuttingMaterial;
     public CuttableObject GetCuttableData()
     {
         return this;
@@ -27,6 +28,10 @@ public class CuttableObject : MonoBehaviour
         if(input.cuttingVisualEffect != null)
         {
             cuttingVisualEffect = input.cuttingVisualEffect;
+        }
+        if(input.cuttingMaterial != null)
+        {
+            cuttingMaterial = input.cuttingMaterial;
         }
     }
 }
