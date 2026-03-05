@@ -37,7 +37,7 @@ MonoBehaviour:
     x: 636
     y: -1433
     width: 690
-    height: 2054
+    height: 2136
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 878, y: 234}
+  m_UIPosition: {x: 880, y: 236}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -645,7 +645,7 @@ MonoBehaviour:
   useEmissiveChannelScale: 0
   useColorAbsorption: 1
   doubleSided: 0
-  receiveShadows: 1
+  receiveShadows: 0
   normalOpacityChannel: 0
   MAOSOpacityChannel: 0
   angleFade: 1
@@ -881,7 +881,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"f23379c002f473149a64c352bffa8420","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"849468b53c7f7984c986e89851d65bd2","type":3}}'
     m_Space: -1
   m_Property:
     name: baseColorMap
@@ -3715,7 +3715,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615152}
   - {fileID: 8926484042661615153}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661615149}
   m_MasterData:
@@ -3724,7 +3724,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":1.0,"g":0.0,"b":0.0,"a":1.0}'
+      m_SerializableObject: '{"r":0.0,"g":0.0,"b":0.0,"a":1.0}'
     m_Space: -1
   m_Property:
     name: emissiveColor
