@@ -24,7 +24,7 @@ public class ResetScript : MonoBehaviour
             fade.color = color;
             if (counter >= 500f)
             {
-                SceneManager.LoadScene("Playground");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
         else

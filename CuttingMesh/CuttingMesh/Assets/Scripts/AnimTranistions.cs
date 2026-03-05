@@ -6,6 +6,7 @@ public class AnimTranistions : MonoBehaviour
 
     Animator anim;
     public Boolean stuck;
+    //public CanGrab canGrab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
