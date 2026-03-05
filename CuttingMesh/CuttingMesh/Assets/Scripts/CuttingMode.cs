@@ -158,7 +158,7 @@ public class CuttingMode : MonoBehaviour
     public void PrepareToCut()
     {
         var objs = FindCuttableObjects();
-        if (objs != null)
+        if (objs != null || objs.Length >0)
         {
             cuttingAngleMod = objs[0].frictionValue;
         }
