@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Collections;
+using System.ComponentModel.Design;
 public class CuttingMode : MonoBehaviour
 {
     bool isCutting = false;
@@ -12,7 +14,22 @@ public class CuttingMode : MonoBehaviour
     public LayerMask layerMask;
     public RenderingLayerMask renderingLayer;
 
+    public Transform chainsawTransform;
+
     public float rotationAngle = 25;
+
+    public float sawAngleStep = 15;
+    public float cuttingAngleMod = 1f;
+    public float sawMaxAngle = 180;
+    public float sawMinAngle = 0;
+    private float currentAngle = 0;
+    private float targetAngle = 0;
+
+    public float rotateDuration = 2f;
+    private bool rotateSaw = false;
+    //private Coroutine rotatingSawCorout;
+
+
     private float currentRotation;
     public Material cutMaterial;
 
@@ -21,44 +38,135 @@ public class CuttingMode : MonoBehaviour
     public float explosiveCuttingForce = 50f;
 
     public UnityEvent cuttingEvent;
+    public UnityEvent finishCut;
     public FrictionGrabber frictionGrab;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            firstPersonController.moveCamera = !firstPersonController.moveCamera;
-            firstPersonController.Inputs.SetCursorState(firstPersonController.moveCamera);
+        //if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    firstPersonController.moveCamera = !firstPersonController.moveCamera;
+        //    firstPersonController.Inputs.SetCursorState(firstPersonController.moveCamera);
             
-        }
-        if (Input.GetMouseButtonDown(0) && !cut)
+        //}
+        if (Input.GetMouseButtonDown(0))
         {
-            cuttingEvent.Invoke();
+            if (!isCutting) { isCutting = true; cuttingEvent.Invoke(); }
+            print("cutting");
+            RotateSaw(sawAngleStep);
+            //if (!rotateSaw) {
+            //    currentAngle = chainsawTransform.localEulerAngles.y;
+            //    targetAngle = currentAngle + sawAngleStep;
+            //    print(currentAngle.ToString());
+            //    elapsedTime = 0f;
+            //}
+            //rotateSaw = true;
             //Slice();
-            cut = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            cut = false;
         }
         //rotation locks do not work yet
         currentRotation = cuttingPlane.rotation.z;
-        if (Input.GetKey(KeyCode.E) && !(currentRotation >= 160))
+        if (Input.GetKey(KeyCode.E))
         {
             RotatePlane(+rotationAngle * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.Q) && !(currentRotation <= -160))
+        if (Input.GetKey(KeyCode.Q))
         {
             RotatePlane(-rotationAngle * Time.deltaTime);
         }
+
+        //if (rotateSaw)
+        //{
+        //    RotateSaw(sawAngleStep);
+        //}
     }
     public void RotatePlane()
     {
         cuttingPlane.eulerAngles += new Vector3(0, 0, -Input.GetAxis("Mouse X") * 5);
     }
+    public void RotateSaw(float angle)
+    {
+        //float yAngle = chainsawTransform.localEulerAngles.y;
+        chainsawTransform.localEulerAngles += new Vector3(0, (angle * cuttingAngleMod), 0);
+
+        if (chainsawTransform.localEulerAngles.y >= sawMaxAngle)
+        {
+            print("passed threshold");
+            chainsawTransform.localEulerAngles = new Vector3(0, sawMinAngle, 0);
+            isCutting = false;
+            finishCut?.Invoke();
+        }
+    }
+    public void RotateSawTimer(float duration)
+    {
+        if (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            float value = Mathf.Lerp(currentAngle,targetAngle, t);
+            //print(value + ", " + t);
+            chainsawTransform.localEulerAngles = new Vector3(0, -value, 0);
+            elapsedTime += Time.deltaTime;
+        }
+        if (elapsedTime >= duration)
+        {
+            print("finished duration");
+            rotateSaw = false;
+        }
+
+        //if (rotatingSawCorout == null)
+        //{
+        //    //rotatingSawCorout = StartCoroutine(RotateSawCoroutine(angle, duration));
+        //}
+    }
+    private float elapsedTime;
+    //IEnumerator RotateSawCoroutine(float angle, float duration)
+    //{
+    //    print("coroutine running");
+    //    float initialStart = currentAngle;
+
+    //    while (elapsedTime < duration)
+    //    {
+    //        float t = elapsedTime / duration;
+
+    //        float sineT = Mathf.Sin(t * Mathf.PI * 0* 5f);
+    //        currentAngle = Mathf.Lerp(initialStart, initialStart + angle, sineT);
+
+    //        chainsawTransform.localEulerAngles += new Vector3(0, -currentAngle * 5, 0);
+
+    //        elapsedTime += Time.deltaTime;
+    //        yield return null;
+    //    }
+        //float timer = duration;
+
+        //while (timer > 0)
+        //{
+        //    yield return new WaitForSeconds(1f);
+        //    timer -= 1f;
+        //}
+
+        //yield return null;
+    //}
 
     public void RotatePlane(float angle)
     {
         cuttingPlane.eulerAngles += new Vector3(0, 0, -angle * 5);
+    }
+    public CuttableObject[] FindCuttableObjects()
+    {
+        if (frictionGrab.FindCuttableObjects() == null) { return null; }
+        return frictionGrab.FindCuttableObjects();
+    }
+
+    public void PrepareToCut()
+    {
+        var objs = FindCuttableObjects();
+        if (objs != null)
+        {
+            cuttingAngleMod = objs[0].frictionValue;
+        }
+        else
+        {
+            print($"no friction found on cutting start of {objs[0].name}");
+            cuttingAngleMod = 1;
+        }
     }
     public void Slice()
     {
@@ -68,9 +176,8 @@ public class CuttingMode : MonoBehaviour
             AudioManager.Instance.Play(cuttingSoundEffect, this.transform.position);
         }
 
-        if (frictionGrab.FindCuttableObjects() == null) { return; }
-        var objects = frictionGrab.FindCuttableObjects();
-
+        var objects = FindCuttableObjects();
+        if (objects == null) { return; }
 
         Collider[] hits = new Collider[objects.Length];
         for (int i = 0; i < objects.Length; i++)
